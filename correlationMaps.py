@@ -11,6 +11,8 @@ title_fontsize = 8
 label_fontsize = 7
 tick_fontsize = 6
 fig_dir = '/glade/derecho/scratch/geethma/figures_GFB/'
+grad_name = ['P/LWP']
+dVar_name = ['∆LWP/∆GMT', '$λ_{cld}$']
 
 file = np.load('/glade/derecho/scratch/cisong/backup_FOR_wyom0124/variables_filtered/pe.npz')
 PE_g_mean = xr.DataArray(file['data'], dims=['runs'], coords={'runs':file['runs']})  # Global dP/dLWP [s-1]
@@ -87,15 +89,15 @@ SWcld_tot_fb_global = trav_fbvar('SWcld_tot', region_dic)
 totdCRE_g = LWcld_tot_fb_global['global'] + SWcld_tot_fb_global['global']
 totdCRE_g = totdCRE_g.sel(runs=common_members)
 
-dVar_name = ['∆LWP/∆GMT * PD P-E', '$λ_{cld}$  * PD P-E']
+
 
 PE_g_mean = PE_g_mean.sel(runs=common_members) 
 grad = [PE_g_mean.data]
 grad = np.array(grad)
-grad_name = ['P/LWP']
 
-lat_sh = dLWP_g.lat.shape[0]
-lon_sh = dLWP_g.lon.shape[0]
+
+# lat_sh = dLWP_g.lat.shape[0]
+# lon_sh = dLWP_g.lon.shape[0]
 
 nums = [[0, 0], [0, 1]]
 title_num = ['(a) ', '(b) ', '(c) ']
@@ -153,7 +155,7 @@ cbar = fig.colorbar(cbar_img, ax=axs, orientation='vertical', fraction=0.05, pad
 cbar.set_label('Correlation', fontsize=label_fontsize)
 cbar.ax.tick_params(labelsize=tick_fontsize)
 
-plt.savefig(fig_dir+'gPE_λcldpdPE_∆LWPpdPE_correlation_statistical.png',
+plt.savefig(fig_dir+'gPE_λcld_∆LWP_correlation_statistical.png',
             bbox_inches='tight', facecolor='white', dpi=600)
 
 # -------------- Plot ∆LWP/∆GMT, lambda, and PD P-E in maps ----------------- 
